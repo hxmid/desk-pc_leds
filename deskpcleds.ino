@@ -28,21 +28,38 @@ float pc_saturation = 255;
 float pc_brightness = 255;
 
 // all my different profiles in one
-class profile
+namespace profile
 {
 	// int for multiple profiles, to be controlled by winform
-	char current = '1';
+	char current = '0';
+	void all_off()
+	{
+		FastLED.clear();
+		for (int current_led; current_led < DESK_NUM_LEDS; current_led++)
+		{
+			desk_led[current_led] = CRGB::Black;
+		}
+		for (int current_led = 0; current_led < PC_NUM_LEDS; current_led++)
+		{
+			pc_led[current_led] = CRGB::Black;
+		}
+		FastLED.show();
+	}
 	void frictionless_rainbow()
 	{
 		// cycle through one full hue cycle, then reset; frictionless (skjut mig)
-		for(float colour = 0; colour < 256; colour++)
+		for (float colour = 0; colour < 256; colour++)
 		{
-			for(int current_led = 0; current_led < DESK_NUM_LEDS; current_led++)
+			if (Serial.available())
+			{
+				return;
+			}
+			for (int current_led = 0; current_led < DESK_NUM_LEDS; current_led++)
 			{
 				desk_led[current_led] = CHSV(colour + ((float)current_led * DESK_FULL_RAINBOW), desk_saturation, desk_brightness);
 			}
 
-			for(int current_led = 0; current_led < PC_NUM_LEDS; current_led++)
+			for (int current_led = 0; current_led < PC_NUM_LEDS; current_led++)
 			{
 				pc_led[current_led] = CHSV(colour + ((float)current_led * PC_FULL_RAINBOW), pc_saturation, pc_brightness);
 			}
@@ -56,6 +73,8 @@ class profile
 // Arduino functions
 void setup()
 {
+	// set the baudrate at which it's expecting input from the WinForm
+	Serial.begin(9600);
 	// init strips
 	FastLED.addLeds<LED_TYPE, DESK_DATA_PIN, ORDER>(desk_led, DESK_NUM_LEDS);
 	FastLED.addLeds<LED_TYPE, PC_DATA_PIN, ORDER>(pc_led, PC_NUM_LEDS);
@@ -64,11 +83,17 @@ void setup()
 
 void loop()
 {
-	switch(profile.current)
+	if (Serial.available())
+	{
+		profile::current = Serial.read();
+	}
+	switch(profile::current)
 	{
 	case '1':
-		profile.frictionless_rainbow();
+		profile::frictionless_rainbow();
+		break;
 	default:
-		profile.frictionless_rainbow();
+		profile::all_off();
+		break;
 	}
 }
