@@ -1,42 +1,74 @@
+// include FastLED library
 #include <FastLED.h>
 
+// setup LED strip details
 #define LED_TYPE WS2812B
 #define ORDER GRB
 
+// pins on Arduino which each strip's LED data comes from 
 #define DESK_DATA_PIN 3
 #define PC_DATA_PIN 11
 
+// number of leds on each strip
 #define DESK_NUM_LEDS 53 //107
 #define PC_NUM_LEDS 58
 
+// show one full hue range on leds at any given time
 #define DESK_FULL_RAINBOW (255/DESK_NUM_LEDS)
 #define PC_FULL_RAINBOW (255/PC_NUM_LEDS)
 
-#define saturation 255
-#define brightness 255
-
+// init array of rgb leds in strips
 CRGB desk_led[DESK_NUM_LEDS];
 CRGB pc_led[PC_NUM_LEDS];
 
+// brightness and saturation as global variables, so i can control them with a winform in c#
+float desk_saturation = 255;
+float desk_brightness = 255;
+float pc_saturation = 255;
+float pc_brightness = 255;
+
+// all my different profiles in one
+class profile
+{
+	// int for multiple profiles, to be controlled by winform
+	char current = '1';
+	void frictionless_rainbow()
+	{
+		// cycle through one full hue cycle, then reset; frictionless (skjut mig)
+		for(float colour = 0; colour < 256; colour++)
+		{
+			for(int current_led = 0; current_led < DESK_NUM_LEDS; current_led++)
+			{
+				desk_led[current_led] = CHSV(colour + ((float)current_led * DESK_FULL_RAINBOW), desk_saturation, desk_brightness);
+			}
+
+			for(int current_led = 0; current_led < PC_NUM_LEDS; current_led++)
+			{
+				pc_led[current_led] = CHSV(colour + ((float)current_led * PC_FULL_RAINBOW), pc_saturation, pc_brightness);
+			}
+
+			// update leds
+			FastLED.show();
+		}
+	}
+}
+
+// Arduino functions
 void setup()
 {
-  FastLED.addLeds<LED_TYPE, DESK_DATA_PIN, ORDER>(desk_led, DESK_NUM_LEDS);
-  FastLED.addLeds<LED_TYPE, PC_DATA_PIN, ORDER>(pc_led, PC_NUM_LEDS);
+	// init strips
+	FastLED.addLeds<LED_TYPE, DESK_DATA_PIN, ORDER>(desk_led, DESK_NUM_LEDS);
+	FastLED.addLeds<LED_TYPE, PC_DATA_PIN, ORDER>(pc_led, PC_NUM_LEDS);
 }
+
+
 void loop()
 {
-  for(float colour = 0; colour < 256; colour++)
-  {
-    for(int current_led = 0; current_led < DESK_NUM_LEDS; current_led++)
-    {
-      desk_led[current_led] = CHSV(colour + ((float)current_led * DESK_FULL_RAINBOW), saturation, brightness);
-    }
-
-    for(int current_led = 0; current_led < PC_NUM_LEDS; current_led++)
-    {
-      pc_led[current_led] = CHSV(colour + ((float)current_led * PC_FULL_RAINBOW), saturation, brightness);
-    }
-
-    FastLED.show();
-  }
+	switch(profile.current)
+	{
+	case '1':
+		profile.frictionless_rainbow();
+	default:
+		profile.frictionless_rainbow();
+	}
 }
