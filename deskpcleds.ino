@@ -1,5 +1,6 @@
 // include FastLED library
 #include <FastLED.h>
+#include <string>
 
 // setup LED strip details
 #define LED_TYPE WS2812B
@@ -10,8 +11,8 @@
 #define PC_DATA_PIN 11
 
 // number of leds on each strip
-#define DESK_NUM_LEDS 53 //107
-#define PC_NUM_LEDS 58
+#define DESK_NUM_LEDS 54 //108
+#define PC_NUM_LEDS 59
 
 // show one full hue range on leds at any given time
 #define DESK_FULL_RAINBOW (255/DESK_NUM_LEDS)
@@ -31,7 +32,7 @@ float pc_brightness = 255;
 namespace profile
 {
 	// int for multiple profiles, to be controlled by winform
-	char current = '0';
+	std::string current = "0";
 	void all_off()
 	{
 		FastLED.clear();
@@ -43,6 +44,7 @@ namespace profile
 		{
 			pc_led[current_led] = CRGB::Black;
 		}
+		// update leds
 		FastLED.show();
 	}
 	void frictionless_rainbow()
@@ -50,16 +52,12 @@ namespace profile
 		// cycle through one full hue cycle, then reset; frictionless (skjut mig)
 		for (float colour = 0; colour < 256; colour++)
 		{
-			if (Serial.available())
-			{
-				return;
-			}
-			for (int current_led = 0; current_led < DESK_NUM_LEDS; current_led++)
+			for (int current_led = 0; current_led < DESK_NUM_LEDS - 1; current_led++)
 			{
 				desk_led[current_led] = CHSV(colour + ((float)current_led * DESK_FULL_RAINBOW), desk_saturation, desk_brightness);
 			}
 
-			for (int current_led = 0; current_led < PC_NUM_LEDS; current_led++)
+			for (int current_led = 0; current_led < PC_NUM_LEDS - 1; current_led++)
 			{
 				pc_led[current_led] = CHSV(colour + ((float)current_led * PC_FULL_RAINBOW), pc_saturation, pc_brightness);
 			}
@@ -68,6 +66,10 @@ namespace profile
 			FastLED.show();
 		}
 	}
+	void visualiser()
+	{
+		
+	}
 }
 
 // Arduino functions
@@ -75,7 +77,7 @@ void setup()
 {
 	// set the baudrate at which it's expecting input from the WinForm
 	Serial.begin(9600);
-	// init strips
+	// initialise strips
 	FastLED.addLeds<LED_TYPE, DESK_DATA_PIN, ORDER>(desk_led, DESK_NUM_LEDS);
 	FastLED.addLeds<LED_TYPE, PC_DATA_PIN, ORDER>(pc_led, PC_NUM_LEDS);
 }
@@ -84,10 +86,9 @@ void setup()
 void loop()
 {
 	if (Serial.available())
-	{
 		profile::current = Serial.read();
-	}
-	switch(profile::current)
+
+	switch(profile::current.at(0))
 	{
 	case '1':
 		profile::frictionless_rainbow();
