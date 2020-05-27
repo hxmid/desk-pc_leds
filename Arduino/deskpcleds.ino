@@ -12,6 +12,7 @@
 // number of leds on each strip
 #define DESK_NUM_LEDS 54 //108
 #define PC_NUM_LEDS 59
+#define PC_NUM_LEDS_BR_CORNER 20
 
 // show one full hue range on leds at any given time
 #define DESK_FULL_RAINBOW (255/DESK_NUM_LEDS)
@@ -20,12 +21,6 @@
 // init array of rgb leds in strips
 CRGB desk_led[DESK_NUM_LEDS];
 CRGB pc_led[PC_NUM_LEDS];
-
-// brightness and saturation as global variables, so i can control them with a winform in c#
-float desk_saturation = 255;
-float desk_brightness = 255;
-float pc_saturation = 255;
-float pc_brightness = 255;
 
 // parsing commands with more options than just which mode is being set
 namespace parse
@@ -52,6 +47,7 @@ namespace parse
 	{
 		String data_input = data_in;
 		data_input.remove(0, data_input.indexOf('B') + 1);
+		data_input.remove(data_input.length() - 1);
 
 		return data_input.toInt();
 	}
@@ -71,7 +67,7 @@ namespace parse
 		data_input.remove(0, data_input.indexOf('B') + 1);
 
 		if (data_input.indexOf('H') > 0 && data_input.indexOf('H') < data_input.length() - 1)
-			data_input.remove(data_input.indexOf('B'), data_input.length() - data_input.indexOf('B'));
+			data_input.remove(data_input.indexOf('H'), data_input.length() - data_input.indexOf('H'));
 
 		return data_input.toInt();
 	}
@@ -80,6 +76,7 @@ namespace parse
 	{
 		String data_input = data_in;
 		data_input.remove(0, data_input.indexOf('H') + 1);
+		data_input.remove(data_input.length() - 1);
 
 		return data_input.toInt();
 	}
@@ -89,7 +86,7 @@ namespace parse
 namespace profile
 {
 	// int for multiple profiles, to be controlled by winform
-	String current = "0";
+	String current = ">00<";
 
 	void all_off()
 	{
@@ -126,7 +123,14 @@ namespace profile
 					return;
 			}
 
-			for (int current_led = 0; current_led < PC_NUM_LEDS - 1; current_led++)
+			for (int current_led = 0; current_led < (PC_NUM_LEDS - 1) - PC_NUM_LEDS_BR_CORNER; current_led++)
+			{
+				pc_led[current_led] = CHSV(colour + ((float)current_led * PC_FULL_RAINBOW), parse::saturation(profile::current), parse::brightness(profile::current));
+				if (Serial.available())
+					return;
+			}
+
+			for (int current_led = PC_NUM_LEDS - 1; current_led > (PC_NUM_LEDS - 1) - PC_NUM_LEDS_BR_CORNER; current_led--)
 			{
 				pc_led[current_led] = CHSV(colour + ((float)current_led * PC_FULL_RAINBOW), parse::saturation(profile::current), parse::brightness(profile::current));
 				if (Serial.available())
@@ -137,7 +141,7 @@ namespace profile
 		}
 	}
 
-	void custom()
+	void custom_rgb()
 	{
 		for (int current_led = 0; current_led < DESK_NUM_LEDS - 1; current_led++)
 		{
@@ -159,9 +163,42 @@ namespace profile
 		FastLED.show();
 	}
 
+	void custom_hsv()
+	{
+		for (int current_led = 0; current_led < DESK_NUM_LEDS - 1; current_led++)
+		{
+			desk_led[current_led] = CHSV(parse::hue(profile::current), parse::saturation(profile::current), parse::brightness(profile::current));
+			if (Serial.available())
+				return;
+		}
+
+		for (int current_led = 0; current_led < PC_NUM_LEDS - 1; current_led++)
+		{
+			desk_led[current_led] = CHSV(parse::hue(profile::current), parse::saturation(profile::current), parse::brightness(profile::current));
+			if (Serial.available())
+				return;
+		}
+		FastLED.show();
+	}
+
 	void visualiser()
 	{
 		
+	}
+
+	void csgo_gamestate()
+	{
+
+	}
+
+	void purple_blue()
+	{
+
+	}
+
+	void notification()
+	{
+
 	}
 }
 
@@ -206,7 +243,10 @@ void loop()
 				profile::frictionless_rainbow();
 
 			else if (profile::current.charAt(2) == '2')
-				profile::custom();
+				profile::custom_rgb();
+
+			else if (profile::current.charAt(2) == '3')
+				profile::custom_hsv();
 
 			else
 				profile::all_off();
