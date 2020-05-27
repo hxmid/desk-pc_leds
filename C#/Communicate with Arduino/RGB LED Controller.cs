@@ -44,9 +44,9 @@ namespace Communicate_with_Arduino
             {
                 combo_COMPort.Items.Add(thing);
                 if (ports[0] != null)
-                {
                     combo_COMPort.SelectedItem = ports[0];
-                }
+                if (ports[1] != null)
+                    combo_COMPort.SelectedItem = ports[1];
             }
             this.Text = string.Empty;
             this.ControlBox = false;
@@ -56,6 +56,17 @@ namespace Communicate_with_Arduino
             trackBar3.Maximum = 255;
             trackBar4.Maximum = 255;
             trackBar5.Maximum = 255;
+            trackBar6.Maximum = 255;
+
+            Task.Delay(2000);
+            connectToArduino();
+            controls(isConnected);
+            Task.Delay(500);
+            combo_Profile.SelectedIndex = 1;
+            trackBar4.Value = 255;
+            trackBar5.Value = 255;
+            Task.Delay(500);
+            force_update();
         }
         private void connectToArduino()
         {
@@ -70,7 +81,7 @@ namespace Communicate_with_Arduino
         {
             if (isConnected)
             {
-                port.Write(">000<");
+                port.Write(">00<");
                 port.Close();
                 isConnected = false;
             }
@@ -135,7 +146,7 @@ namespace Communicate_with_Arduino
                 trackBar3.Visible = false;
             }
 
-            if (combo_Profile.SelectedIndex == 1)
+            if (combo_Profile.SelectedIndex == 1 || combo_Profile.SelectedIndex == 3)
             {
                 label6.Visible = true;
                 label7.Visible = true;
@@ -148,6 +159,17 @@ namespace Communicate_with_Arduino
                 label7.Visible = false;
                 trackBar4.Visible = false;
                 trackBar5.Visible = false;
+            }
+
+            if (combo_Profile.SelectedIndex == 3)
+            {
+                label8.Visible = true;
+                trackBar6.Visible = true;
+            }
+            else
+            {
+                label8.Visible = false;
+                trackBar6.Visible = false;
             }
             force_update();
         }
@@ -182,6 +204,8 @@ namespace Communicate_with_Arduino
                 port.Write((">0" + combo_Profile.SelectedIndex.ToString() + "S" + trackBar4.Value.ToString() + "B" + trackBar5.Value.ToString() + "<"));
             else if (combo_Profile.SelectedIndex == 2)
                 port.Write((">0" + combo_Profile.SelectedIndex.ToString() + "R" + trackBar1.Value.ToString() + "G" + trackBar2.Value.ToString() + "B" + trackBar3.Value.ToString() + "<"));
+            else if (combo_Profile.SelectedIndex == 3)
+                port.Write((">0" + combo_Profile.SelectedIndex.ToString() + "S" + trackBar4.Value.ToString() + "B" + trackBar5.Value.ToString() + "H" + trackBar6.Value.ToString() + "<"));
             else
                 port.Write((">0" + combo_Profile.SelectedIndex.ToString() + "<"));
         }
@@ -214,6 +238,7 @@ namespace Communicate_with_Arduino
 
         private void button4_Click(object sender, EventArgs e)
         {
+            hidden = true;
             Hide();
         }
 
@@ -248,32 +273,37 @@ namespace Communicate_with_Arduino
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-        //    force_update();
+            force_update();
         }
 
         private void trackBar4_Scroll(object sender, EventArgs e)
         {
-        //    force_update();
+            force_update();
         }
 
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
-        //    force_update();
+            force_update();
         }
 
         private void trackBar5_Scroll(object sender, EventArgs e)
         {
-        //    force_update();
+            force_update();
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
-        //    force_update();
+            force_update();
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
             textBox1.Text = "";
+        }
+
+        private void trackBar6_Scroll(object sender, EventArgs e)
+        {
+            force_update();
         }
     }
 }

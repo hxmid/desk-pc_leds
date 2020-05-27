@@ -51,11 +51,14 @@
             this.trackBar5 = new System.Windows.Forms.TrackBar();
             this.label7 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.trackBar6 = new System.Windows.Forms.TrackBar();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar6)).BeginInit();
             this.SuspendLayout();
             // 
             // combo_COMPort
@@ -294,12 +297,34 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
+            // trackBar6
+            // 
+            this.trackBar6.Location = new System.Drawing.Point(13, 204);
+            this.trackBar6.Name = "trackBar6";
+            this.trackBar6.Size = new System.Drawing.Size(240, 45);
+            this.trackBar6.TabIndex = 25;
+            this.trackBar6.Visible = false;
+            this.trackBar6.Scroll += new System.EventHandler(this.trackBar6_Scroll);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(14, 188);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(27, 13);
+            this.label8.TabIndex = 26;
+            this.label8.Text = "Hue";
+            this.label8.Visible = false;
+            // 
             // RGB_LED_Controller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(48)))), ((int)(((byte)(96)))));
             this.ClientSize = new System.Drawing.Size(263, 379);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.trackBar6);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.trackBar5);
@@ -331,6 +356,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -359,5 +385,7 @@
         private System.Windows.Forms.TrackBar trackBar5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TrackBar trackBar6;
+        private System.Windows.Forms.Label label8;
     }
 }
