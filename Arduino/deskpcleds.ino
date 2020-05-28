@@ -66,7 +66,7 @@ namespace parse
 		String data_input = data_in;
 		data_input.remove(0, data_input.indexOf('B') + 1);
 
-		if (data_input.indexOf('H') > 0 && data_input.indexOf('H') < data_input.length() - 1)
+		if (data_input.indexOf('H') != -1)
 			data_input.remove(data_input.indexOf('H'), data_input.length() - data_input.indexOf('H'));
 
 		return data_input.toInt();
@@ -174,7 +174,7 @@ namespace profile
 
 		for (int current_led = 0; current_led < PC_NUM_LEDS - 1; current_led++)
 		{
-			desk_led[current_led] = CHSV(parse::hue(profile::current), parse::saturation(profile::current), parse::brightness(profile::current));
+			pc_led[current_led] = CHSV(parse::hue(profile::current), parse::saturation(profile::current), parse::brightness(profile::current));
 			if (Serial.available())
 				return;
 		}

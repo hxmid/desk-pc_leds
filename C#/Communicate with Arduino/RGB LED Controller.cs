@@ -82,6 +82,7 @@ namespace Communicate_with_Arduino
             if (isConnected)
             {
                 port.Write(">00<");
+                Task.Delay(500);
                 port.Close();
                 isConnected = false;
             }
