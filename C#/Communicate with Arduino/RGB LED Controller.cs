@@ -35,6 +35,7 @@ namespace Communicate_with_Arduino
         bool isConnected = false;
         bool hidden = false;
         private string in_data;
+        private const bool auto = true;
         public RGB_LED_Controller()
         {
             InitializeComponent();
@@ -57,16 +58,18 @@ namespace Communicate_with_Arduino
             trackBar4.Maximum = 255;
             trackBar5.Maximum = 255;
             trackBar6.Maximum = 255;
-
-            Task.Delay(2000);
-            connectToArduino();
-            controls(isConnected);
-            Task.Delay(500);
-            combo_Profile.SelectedIndex = 1;
-            trackBar4.Value = 255;
-            trackBar5.Value = 255;
-            Task.Delay(500);
-            force_update();
+            if (auto)
+            {
+                Task.Delay(2000);
+                connectToArduino();
+                controls(isConnected);
+                Task.Delay(500);
+                combo_Profile.SelectedIndex = 1;
+                trackBar4.Value = 255;
+                trackBar5.Value = 255;
+                Task.Delay(500);
+                force_update();
+            }
         }
         private void connectToArduino()
         {
