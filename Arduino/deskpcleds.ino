@@ -109,14 +109,14 @@ namespace parse
 // all my different profiles in one
 namespace profile
 {
-	// int for multiple profiles, to be controlled by winform
+	// Command string, changed by the new_imput function in parse.
 	String current = ">00<";
 
 	bool profile_changed()
 	{
 		static String data_input = profile::current;
 		parse::new_input();
-		if (profile::current.charAt(1) == data_input.charAt(1))
+		if (profile::current.charAt(2) == data_input.charAt(2))
 			return false;
 		else
 			return true;

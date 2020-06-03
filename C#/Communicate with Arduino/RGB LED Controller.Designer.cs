@@ -63,8 +63,9 @@
             // 
             // combo_COMPort
             // 
-            this.combo_COMPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(48)))), ((int)(((byte)(94)))));
+            this.combo_COMPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.combo_COMPort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.combo_COMPort.ForeColor = System.Drawing.Color.White;
             this.combo_COMPort.FormattingEnabled = true;
             this.combo_COMPort.Location = new System.Drawing.Point(113, 32);
             this.combo_COMPort.Name = "combo_COMPort";
@@ -74,15 +75,16 @@
             // 
             // button_update
             // 
-            this.button_update.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(48)))), ((int)(((byte)(94)))));
+            this.button_update.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button_update.FlatAppearance.BorderSize = 0;
-            this.button_update.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(63)))), ((int)(((byte)(85)))));
+            this.button_update.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.button_update.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_update.ForeColor = System.Drawing.SystemColors.Control;
             this.button_update.Location = new System.Drawing.Point(178, 344);
             this.button_update.Name = "button_update";
             this.button_update.Size = new System.Drawing.Size(75, 23);
             this.button_update.TabIndex = 2;
-            this.button_update.Text = "Impose";
+            this.button_update.Text = "Update";
             this.button_update.UseVisualStyleBackColor = false;
             this.button_update.Click += new System.EventHandler(this.button_update_Click);
             // 
@@ -110,8 +112,9 @@
             // 
             // combo_Profile
             // 
-            this.combo_Profile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(48)))), ((int)(((byte)(94)))));
+            this.combo_Profile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.combo_Profile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.combo_Profile.ForeColor = System.Drawing.Color.White;
             this.combo_Profile.FormattingEnabled = true;
             this.combo_Profile.Items.AddRange(new object[] {
             "Off",
@@ -126,10 +129,11 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(48)))), ((int)(((byte)(94)))));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(63)))), ((int)(((byte)(85)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Location = new System.Drawing.Point(13, 344);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -149,7 +153,7 @@
             // 
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.Color.Red;
+            this.button3.ForeColor = System.Drawing.Color.DarkRed;
             this.button3.Location = new System.Drawing.Point(233, -1);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(31, 23);
@@ -162,7 +166,7 @@
             // 
             this.button4.FlatAppearance.BorderSize = 0;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.ForeColor = System.Drawing.Color.OrangeRed;
+            this.button4.ForeColor = System.Drawing.Color.DarkRed;
             this.button4.Location = new System.Drawing.Point(196, -1);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(31, 23);
@@ -285,10 +289,11 @@
             // 
             // button2
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(48)))), ((int)(((byte)(94)))));
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(63)))), ((int)(((byte)(85)))));
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.ForeColor = System.Drawing.SystemColors.Control;
             this.button2.Location = new System.Drawing.Point(232, 264);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(19, 63);
@@ -321,7 +326,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(48)))), ((int)(((byte)(96)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.ClientSize = new System.Drawing.Size(263, 379);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.trackBar6);
